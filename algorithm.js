@@ -27,14 +27,12 @@ Process.maxVORP = function (positions, budget, callback) {
           var newBudget = budget - currentPlayer.salary;
 
           var lengthOfPositions = positionKeys.length;
-          var subProblem;
-          if (!isInMemo(newBudget, lengthOfPositions)) {
+          var subProblem = getMemo(budget, lengthOfPositions);
+          if (!subProblem) {
             subProblem = mV(subListOfPositions, newBudget);
             subProblem.vorp += parseFloat(currentPlayer.vorp);
             subProblem.team[playerName] = currentPlayer;
             addToMemo(budget, lengthOfPositions, subProblem);
-          } else {
-            subProblem = getMemo(budget, lengthOfPositions);
           }
           if (subProblem.vorp > result.vorp) {
             result.vorp = subProblem.vorp;
@@ -46,12 +44,8 @@ Process.maxVORP = function (positions, budget, callback) {
     return result;
   };
 
-  function isInMemo(budget, positionsLeft) {
-    return memo && memo[positionsLeft] && memo[positionsLeft][budget] !== undefined;
-  }
-
   function getMemo(budget, positionsLeft) {
-    return memo[positionsLeft][budget];
+    return memo && memo[positionsLeft] && memo[positionsLeft][budget] ? memo[positionsLeft][budget] : undefined;
   }
 
   function addToMemo(budget, positionsLeft, value) {
