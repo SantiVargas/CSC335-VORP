@@ -45,7 +45,7 @@ Process.maxVORP = function (positions, budget, callback) {
   };
 
   function getMemo(budget, positionsLeft) {
-    return memo && memo[positionsLeft] && memo[positionsLeft][budget] ? memo[positionsLeft][budget] : undefined;
+    return memo && memo[positionsLeft] ? memo[positionsLeft][budget] : undefined;
   }
 
   function addToMemo(budget, positionsLeft, value) {
