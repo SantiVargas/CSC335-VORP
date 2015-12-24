@@ -8,9 +8,10 @@ var express = require('express');
 var app = express();
 var algorithm = require("./algorithm.js");
 var _ = require("underscore");
+var config = require("config");
 
 //Globals
-var port = 3000;
+var port = config.get("port");
 
 //Setup Server
 app.set('view engine', 'jade');
